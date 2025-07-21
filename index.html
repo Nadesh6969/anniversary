@@ -4,29 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Love Story</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Poppins', sans-serif;
       background: linear-gradient(to bottom right, #fff0f5, #ffe4e1);
       color: #333;
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
 
     header {
       text-align: center;
-      padding: 50px 20px 20px;
+      padding: 60px 20px 30px;
       background-color: #fff0f5;
     }
 
     header h1 {
-      font-size: 3em;
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.5em;
       margin: 0 0 10px;
       color: #d63384;
     }
 
     header p {
-      font-size: 1.2em;
+      font-size: 1.3em;
       color: #555;
     }
 
@@ -42,12 +45,24 @@
       margin: 40px 0;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      transition: transform 0.3s ease;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1s forwards;
     }
 
-    .entry:hover {
-      transform: scale(1.02);
+    .entry:nth-child(1) { animation-delay: 0.2s; }
+    .entry:nth-child(2) { animation-delay: 0.4s; }
+    .entry:nth-child(3) { animation-delay: 0.6s; }
+    .entry:nth-child(4) { animation-delay: 0.8s; }
+    .entry:nth-child(5) { animation-delay: 1s; }
+    .entry:nth-child(6) { animation-delay: 1.2s; }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .entry h2 {
@@ -68,13 +83,79 @@
       margin-top: 10px;
     }
 
-    audio {
+    .letter-section {
+      text-align: center;
+      margin: 50px auto;
+      padding: 30px;
+      max-width: 700px;
+    }
+
+    .letter-btn {
+      background: #d63384;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .letter-btn:hover {
+      background: #c2185b;
+    }
+
+    .letter {
       display: none;
+      margin-top: 20px;
+      font-size: 1.1em;
+      color: #444;
+      background: #fffafc;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #d63384;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Emoji_u2764.svg/20px-Emoji_u2764.svg.png') no-repeat center/contain;
+      animation: float 6s infinite ease-in;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
     }
 
     @media (max-width: 600px) {
       header h1 {
-        font-size: 2em;
+        font-size: 2.5em;
       }
       .entry {
         padding: 15px;
@@ -83,10 +164,13 @@
   </style>
 </head>
 <body>
-  <audio autoplay loop>
+  <audio id="bg-music" loop>
     <source src="your-music.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
+
+  <button class="music-btn" onclick="toggleMusic()">Play Music</button>
+  <div class="hearts"></div>
 
   <header>
     <h1>Our Love Story</h1>
@@ -94,6 +178,12 @@
   </header>
 
   <main class="timeline">
+    <div class="entry">
+      <h2>August 2020 – The First Glance</h2>
+      <img src="images/firstglance.jpg" alt="First Glance">
+      <p>Before we even spoke, my heart already knew your name.</p>
+    </div>
+
     <div class="entry">
       <h2>March 2021 – When We Met</h2>
       <img src="images/meeting.jpg" alt="First Meeting">
@@ -112,8 +202,60 @@
       <p>One year of unforgettable memories. Here's to forever.</p>
     </div>
 
-    <!-- Add more entries here -->
+    <div class="entry">
+      <h2>June 2023 – Our Future Talks</h2>
+      <img src="images/future.jpg" alt="Future Plans">
+      <p>We started dreaming out loud. I can’t wait for that future with you.</p>
+    </div>
 
+    <div class="entry">
+      <h2>July 2025 – Your Birthday</h2>
+      <img src="images/birthday.jpg" alt="Birthday Celebration">
+      <p>This site is my small gift to you. A token of all our love and memories so far. Happy Birthday, my Simran 💖</p>
+    </div>
   </main>
+
+  <section class="letter-section">
+    <button class="letter-btn" onclick="toggleLetter()">Read My Letter to You 💌</button>
+    <div id="letter" class="letter">
+      Dear Simran,<br><br>
+      From the first moment we met, I knew something special had begun. Every memory we’ve shared, every laugh and tear, has made me love you more deeply than I ever thought possible.<br><br>
+      This site is a small piece of how much you mean to me. I can’t wait to create more memories with you.<br><br>
+      Love always,<br>
+      Nadesh 💖
+    </div>
+  </section>
+
+  <script>
+    const music = document.getElementById('bg-music');
+    let isPlaying = false;
+
+    function toggleMusic() {
+      if (isPlaying) {
+        music.pause();
+        document.querySelector('.music-btn').textContent = 'Play Music';
+      } else {
+        music.play();
+        document.querySelector('.music-btn').textContent = 'Pause Music';
+      }
+      isPlaying = !isPlaying;
+    }
+
+    function toggleLetter() {
+      const letter = document.getElementById('letter');
+      letter.style.display = letter.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Heart animation
+    const heartsContainer = document.querySelector('.hearts');
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 7000);
+    }, 500);
+  </script>
 </body>
 </html>
