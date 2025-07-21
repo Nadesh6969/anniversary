@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Love Story</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #fff0f5, #ffe4e1);
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 50px 20px 20px;
+      background-color: #fff0f5;
+    }
+
+    header h1 {
+      font-size: 3em;
+      margin: 0 0 10px;
+      color: #d63384;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #555;
+    }
+
+    .timeline {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .entry {
+      background: white;
+      border-left: 5px solid #d63384;
+      margin: 40px 0;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .entry:hover {
+      transform: scale(1.02);
+    }
+
+    .entry h2 {
+      color: #d63384;
+      margin-top: 0;
+    }
+
+    .entry img {
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .entry p {
+      font-size: 1em;
+      line-height: 1.6;
+      color: #444;
+      margin-top: 10px;
+    }
+
+    audio {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2em;
+      }
+      .entry {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="your-music.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <header>
+    <h1>Our Love Story</h1>
+    <p>A timeline of our most beautiful moments together 💕</p>
+  </header>
+
+  <main class="timeline">
+    <div class="entry">
+      <h2>March 2021 – When We Met</h2>
+      <img src="images/meeting.jpg" alt="First Meeting">
+      <p>I still remember your smile that day. It changed everything.</p>
+    </div>
+
+    <div class="entry">
+      <h2>July 2021 – Our First Trip</h2>
+      <img src="images/trip.jpg" alt="Our First Trip">
+      <p>We explored so much together. I knew you were the one ❤️</p>
+    </div>
+
+    <div class="entry">
+      <h2>February 2022 – Our Anniversary</h2>
+      <img src="images/anniversary.jpg" alt="Anniversary">
+      <p>One year of unforgettable memories. Here's to forever.</p>
+    </div>
+
+    <!-- Add more entries here -->
+
+  </main>
+</body>
+</html>
