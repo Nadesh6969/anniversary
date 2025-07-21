@@ -19,6 +19,7 @@
       text-align: center;
       padding: 60px 20px 30px;
       background-color: #fff0f5;
+      animation: popIn 1s ease forwards;
     }
 
     header h1 {
@@ -48,7 +49,7 @@
       box-shadow: 0 8px 16px rgba(0,0,0,0.05);
       opacity: 0;
       transform: translateY(20px);
-      animation: fadeIn 1s forwards;
+      animation: fadeInUp 1s forwards ease;
     }
 
     .entry:nth-child(1) { animation-delay: 0.2s; }
@@ -58,10 +59,21 @@
     .entry:nth-child(5) { animation-delay: 1s; }
     .entry:nth-child(6) { animation-delay: 1.2s; }
 
-    @keyframes fadeIn {
+    @keyframes fadeInUp {
       to {
         opacity: 1;
         transform: translateY(0);
+      }
+    }
+
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
       }
     }
 
@@ -74,6 +86,11 @@
       width: 100%;
       border-radius: 10px;
       margin-top: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .entry img:hover {
+      transform: scale(1.05);
     }
 
     .entry p {
@@ -88,6 +105,7 @@
       margin: 50px auto;
       padding: 30px;
       max-width: 700px;
+      animation: popIn 1.5s ease forwards;
     }
 
     .letter-btn {
@@ -98,11 +116,12 @@
       border-radius: 25px;
       font-size: 1em;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
 
     .letter-btn:hover {
       background: #c2185b;
+      transform: scale(1.05);
     }
 
     .letter {
@@ -128,6 +147,11 @@
       cursor: pointer;
       z-index: 100;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease;
+    }
+
+    .music-btn:hover {
+      transform: scale(1.1);
     }
 
     .hearts {
@@ -178,41 +202,7 @@
   </header>
 
   <main class="timeline">
-    <div class="entry">
-      <h2>August 2020 – The First Glance</h2>
-      <img src="images/firstglance.jpg" alt="First Glance">
-      <p>Before we even spoke, my heart already knew your name.</p>
-    </div>
-
-    <div class="entry">
-      <h2>March 2021 – When We Met</h2>
-      <img src="images/meeting.jpg" alt="First Meeting">
-      <p>I still remember your smile that day. It changed everything.</p>
-    </div>
-
-    <div class="entry">
-      <h2>July 2021 – Our First Trip</h2>
-      <img src="images/trip.jpg" alt="Our First Trip">
-      <p>We explored so much together. I knew you were the one ❤️</p>
-    </div>
-
-    <div class="entry">
-      <h2>February 2022 – Our Anniversary</h2>
-      <img src="images/anniversary.jpg" alt="Anniversary">
-      <p>One year of unforgettable memories. Here's to forever.</p>
-    </div>
-
-    <div class="entry">
-      <h2>June 2023 – Our Future Talks</h2>
-      <img src="images/future.jpg" alt="Future Plans">
-      <p>We started dreaming out loud. I can’t wait for that future with you.</p>
-    </div>
-
-    <div class="entry">
-      <h2>July 2025 – Your Birthday</h2>
-      <img src="images/birthday.jpg" alt="Birthday Celebration">
-      <p>This site is my small gift to you. A token of all our love and memories so far. Happy Birthday, my Simran 💖</p>
-    </div>
+    <!-- Timeline entries here -->
   </main>
 
   <section class="letter-section">
@@ -246,7 +236,6 @@
       letter.style.display = letter.style.display === 'block' ? 'none' : 'block';
     }
 
-    // Heart animation
     const heartsContainer = document.querySelector('.hearts');
     setInterval(() => {
       const heart = document.createElement('div');
