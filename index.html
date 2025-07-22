@@ -140,6 +140,7 @@
     }
 
     .letter {
+      display: none;
       margin-top: 20px;
       font-size: 1.1rem;
       color: #444;
@@ -295,7 +296,7 @@
 
   <section class="letter-section" role="complementary">
     <button class="letter-btn" onclick="toggleLetter()" aria-expanded="false" aria-controls="letter">Read My Letter to You 💌</button>
-    <div id="letter" class="letter">
+    <div id="letter" class="letter" style="display: none;">
       Dear Simran,<br><br>
       From the first moment we met, I knew something special had begun. Every memory we’ve shared, every laugh and tear, has made me love you more deeply than I ever thought possible.<br><br>
       This site is a small piece of how much you mean to me. I can’t wait to create more memories with you.<br><br>
@@ -337,16 +338,18 @@
     function toggleLetter() {
       const letter = document.getElementById('letter');
       const btn = document.querySelector('.letter-btn');
-      const isOpen = letter.style.display === 'block';
-      
+      const isOpen = letter.classList.contains('visible');
+
       if (isOpen) {
         letter.classList.add('hidden');
+        letter.classList.remove('visible');
         setTimeout(() => {
           letter.style.display = 'none';
           letter.classList.remove('hidden');
-        }, 500); // Match animation duration
+        }, 500); // Match fadeOut animation duration
       } else {
         letter.style.display = 'block';
+        letter.classList.add('visible');
         letter.scrollIntoView({ behavior: 'smooth' });
       }
       btn.setAttribute('aria-expanded', !isOpen);
@@ -370,7 +373,7 @@
     }
 
     function calculateTimeTogether() {
-      const startDate = new Date('2020-11-29T19:00:00+08:00');
+      const startDate = new Date('2020-11-29T18:30:00+08:00');
       const currentDate = new Date();
       const timeDiff = currentDate - startDate;
       
@@ -385,9 +388,13 @@
       document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
     }
 
+    // Ensure letter is hidden on load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('letter').style.display = 'none';
+      calculateTimeTogether();
+    });
     setInterval(animateHearts, 1000);
     setInterval(calculateTimeTogether, 1000);
-    document.addEventListener('DOMContentLoaded', calculateTimeTogether);
   </script>
 </body>
 </html>
