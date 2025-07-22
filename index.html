@@ -15,6 +15,60 @@
       overflow-x: hidden;
     }
 
+    .splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom right, #ffccd5, #ffb6c1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .splash-screen.hidden {
+      animation: fadeOutSplash 1s ease forwards;
+    }
+
+    .splash-screen h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      color: #d63384;
+      text-align: center;
+      margin: 0 20px 40px; /* Increased margin-bottom to move text up */
+    }
+
+    .splash-heart {
+      width: 80px;
+      height: 80px;
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 0 8px rgba(214, 51, 132, 0.5)); /* Glow effect */
+    }
+
+    .splash-heart svg {
+      width: 100%;
+      height: 100%;
+      fill: #d63384;
+    }
+
+    @keyframes fadeOutSplash {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .main-content {
+      display: none;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .main-content.visible {
+      display: block;
+    }
+
     header {
       text-align: center;
       padding: 60px 20px 30px;
@@ -88,6 +142,11 @@
     @keyframes fadeOut {
       0% { opacity: 1; transform: translateY(0); }
       100% { opacity: 0; transform: translateY(20px); }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
     }
 
     .entry h2 {
@@ -216,10 +275,18 @@
       .heart {
         font-size: 0.6rem;
       }
+      .splash-screen h1 {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+      }
+      .splash-heart {
+        width: 60px;
+        height: 60px;
+      }
     }
 
     @media (prefers-color-scheme: dark) {
-      body {
+      body, .splash-screen {
         background: linear-gradient(to bottom right, #2c003e, #4a0072);
         color: #f0e6f6;
       }
@@ -234,80 +301,101 @@
         color: #f48fb1;
         text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
       }
+      .splash-screen h1 {
+        color: #f48fb1;
+      }
+      .splash-heart svg {
+        fill: #f48fb1;
+      }
     }
   </style>
 </head>
 <body>
-  <audio id="bg-music" loop preload="metadata">
-    <source src="your-music.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-  <button class="music-btn" onclick="toggleMusic()">Play Music</button>
-  <button class="hearts-btn" onclick="toggleHearts()">Disable Hearts</button>
-  <div class="hearts"></div>
+  <div class="splash-screen" onclick="handleTap()">
+    <h1>Tap to Show Your Love for Me</h1>
+    <div class="splash-heart">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        <path d="M7.5 5c-1.38 0-2.5 1.12-2.5 2.5 0 2.1 2.5 4.5 5 6.5l2 1.5 2-1.5c2.5-2 5-4.5 5-6.5 0-1.38-1.12-2.5-2.5-2.5-1.1 0-2.1.67-2.5 1.67l-.5 1-.5-1C9.6 5.67 8.6 5 7.5 5z" fill-opacity="0.3"/>
+      </svg>
+    </div>
+  </div>
 
-  <header role="banner">
-    <section class="hero">
-      <h1>Our Love Story</h1>
-      <p>A timeline of our most beautiful moments together 💕</p>
-      <div class="time-counter">
-        <p>We've been together for: 
-          <span id="days">0</span> days, 
-          <span id="hours">0</span> hours, 
-          <span id="minutes">0</span> minutes, 
-          <span id="seconds">0</span> seconds 💞
-        </p>
+  <div class="main-content">
+    <audio id="bg-music" loop preload="metadata">
+      <source src="your-music.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <button class="music-btn" onclick="toggleMusic()">Play Music</button>
+    <button class="hearts-btn" onclick="toggleHearts()">Disable Hearts</button>
+    <div class="hearts"></div>
+
+    <header role="banner">
+      <section class="hero">
+        <h1>Our Love Story</h1>
+        <p>A timeline of our most beautiful moments together 💕</p>
+        <div class="time-counter">
+          <p>We've been together for: 
+            <span id="days">0</span> days, 
+            <span id="hours">0</span> hours, 
+            <span id="minutes">0</span> minutes, 
+            <span id="seconds">0</span> seconds 💞
+          </p>
+        </div>
+      </section>
+    </header>
+
+    <section class="timeline" role="main">
+      <div class="entry" id="year-2020">
+        <h2>2020 – The Beginning 💘</h2>
+        <p>The year we met and everything changed. From strangers to soulmates, our journey began.</p>
+        <img src="images/2020.jpg" alt="Photo from our first meeting in 2020" class="memory-photo" loading="lazy">
+      </div>
+      <div class="entry" id="year-2021">
+        <h2>2021 – Adventures Together ✈️</h2>
+        <p>Our first trips, inside jokes, and hundreds of photos that captured laughter and love.</p>
+        <img src="images/2021.jpg" alt="Photo from our first trip together in 2021" class="memory-photo" loading="lazy">
+      </div>
+      <div class="entry" id="year-2022">
+        <h2>2022 – Growing Stronger 🌱</h2>
+        <p>Through challenges and distance, we grew stronger, hand in hand, heart to heart.</p>
+        <img src="images/2022.jpg" alt="Photo from a special moment in 2022" class="memory-photo" loading="lazy">
+      </div>
+      <div class="entry" id="year-2023">
+        <h2>2023 – Milestones 🎉</h2>
+        <p>Celebrating our wins, birthdays, and another year filled with memories and kisses.</p>
+        <img src="images/2023.jpg" alt="Photo from our 2023 anniversary celebration" class="memory-photo" loading="lazy">
+      </div>
+      <div class="entry" id="year-2024">
+        <h2>2024 – Dreams and Promises 💍</h2>
+        <p>Making plans, promising forever, and dreaming of a beautiful future together.</p>
+        <img src="images/2024.jpg" alt="Photo from a romantic moment in 2024" class="memory-photo" loading="lazy">
+      </div>
+      <div class="entry" id="year-2025">
+        <h2>2025 – Right Now 💖</h2>
+        <p>This very moment. This very love. We are here, and I’m so thankful for you.</p>
+        <img src="images/2025.jpg" alt="Photo capturing our love in 2025" class="memory-photo" loading="lazy">
       </div>
     </section>
-  </header>
 
-  <section class="timeline" role="main">
-    <div class="entry" id="year-2020">
-      <h2>2020 – The Beginning 💘</h2>
-      <p>The year we met and everything changed. From strangers to soulmates, our journey began.</p>
-      <img src="images/2020.jpg" alt="Photo from our first meeting in 2020" class="memory-photo" loading="lazy">
-    </div>
-    <div class="entry" id="year-2021">
-      <h2>2021 – Adventures Together ✈️</h2>
-      <p>Our first trips, inside jokes, and hundreds of photos that captured laughter and love.</p>
-      <img src="images/2021.jpg" alt="Photo from our first trip together in 2021" class="memory-photo" loading="lazy">
-    </div>
-    <div class="entry" id="year-2022">
-      <h2>2022 – Growing Stronger 🌱</h2>
-      <p>Through challenges and distance, we grew stronger, hand in hand, heart to heart.</p>
-      <img src="images/2022.jpg" alt="Photo from a special moment in 2022" class="memory-photo" loading="lazy">
-    </div>
-    <div class="entry" id="year-2023">
-      <h2>2023 – Milestones 🎉</h2>
-      <p>Celebrating our wins, birthdays, and another year filled with memories and kisses.</p>
-      <img src="images/2023.jpg" alt="Photo from our 2023 anniversary celebration" class="memory-photo" loading="lazy">
-    </div>
-    <div class="entry" id="year-2024">
-      <h2>2024 – Dreams and Promises 💍</h2>
-      <p>Making plans, promising forever, and dreaming of a beautiful future together.</p>
-      <img src="images/2024.jpg" alt="Photo from a romantic moment in 2024" class="memory-photo" loading="lazy">
-    </div>
-    <div class="entry" id="year-2025">
-      <h2>2025 – Right Now 💖</h2>
-      <p>This very moment. This very love. We are here, and I’m so thankful for you.</p>
-      <img src="images/2025.jpg" alt="Photo capturing our love in 2025" class="memory-photo" loading="lazy">
-    </div>
-  </section>
-
-  <section class="letter-section" role="complementary">
-    <button class="letter-btn" onclick="toggleLetter()" aria-expanded="false" aria-controls="letter">Read My Letter to You 💌</button>
-    <div id="letter" class="letter" style="display: none;">
-      Dear Simran,<br><br>
-      From the first moment we met, I knew something special had begun. Every memory we’ve shared, every laugh and tear, has made me love you more deeply than I ever thought possible.<br><br>
-      This site is a small piece of how much you mean to me. I can’t wait to create more memories with you.<br><br>
-      Love always,<br>
-      Nadesh 💖
-    </div>
-  </section>
+    <section class="letter-section" role="complementary">
+      <button class="letter-btn" onclick="toggleLetter()" aria-expanded="false" aria-controls="letter">Read My Letter to You 💌</button>
+      <div id="letter" class="letter" style="display: none;">
+        Dear Simran,<br><br>
+        From the first moment we met, I knew something special had begun. Every memory we’ve shared, every laugh and tear, has made me love you more deeply than I ever thought possible.<br><br>
+        This site is a small piece of how much you mean to me. I can’t wait to create more memories with you.<br><br>
+        Love always,<br>
+        Nadesh 💖
+      </div>
+    </section>
+  </div>
 
   <script>
     let isPlaying = false;
     let heartsEnabled = true;
+    let tapCount = 0;
+    const maxTaps = 5;
+
     const music = document.getElementById('bg-music');
     const heartsContainer = document.querySelector('.hearts');
     const maxHearts = 20;
@@ -316,12 +404,29 @@
       heart.classList.add('heart');
       heart.textContent = 'Nadesh ❤️ Simran';
       heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.top = '100vh'; // Start at bottom
+      heart.style.top = '100vh';
       heart.style.animationDuration = (6 + Math.random() * 4) + 's';
       heart.style.animationDelay = Math.random() * 8 + 's';
       heartsContainer.appendChild(heart);
       return heart;
     });
+
+    function handleTap() {
+      tapCount++;
+      const heart = document.querySelector('.splash-heart');
+      const scale = 1 + tapCount * 0.3; // Grow by 0.3 per tap
+      heart.style.transform = `scale(${scale})`;
+
+      if (tapCount >= maxTaps) {
+        const splash = document.querySelector('.splash-screen');
+        const mainContent = document.querySelector('.main-content');
+        splash.classList.add('hidden');
+        setTimeout(() => {
+          splash.style.display = 'none';
+          mainContent.classList.add('visible');
+        }, 1000);
+      }
+    }
 
     function toggleMusic() {
       if (isPlaying) {
@@ -367,7 +472,7 @@
       hearts.forEach(heart => {
         if (parseFloat(heart.style.opacity) === 0 || !heart.style.opacity) {
           heart.style.left = Math.random() * 100 + 'vw';
-          heart.style.top = '100vh'; // Reset to bottom
+          heart.style.top = '100vh';
           heart.style.animationDuration = (6 + Math.random() * 4) + 's';
           heart.style.animationDelay = Math.random() * 8 + 's';
           heart.style.opacity = 0.7;
