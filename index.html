@@ -39,12 +39,12 @@
       font-size: 2.5rem;
       color: #d63384;
       text-align: center;
-      margin: 0 20px 40px;
+      margin: 0 20px 60px;
     }
 
     .splash-heart {
-      width: 80px;
-      height: 80px;
+      width: 120px;
+      height: 120px;
       transition: transform 0.3s ease;
       filter: drop-shadow(0 0 6px rgba(214, 51, 132, 0.4));
       position: relative;
@@ -366,11 +366,11 @@
       }
       .splash-screen h1 {
         font-size: 1.8rem;
-        margin-bottom: 30px;
+        margin-bottom: 50px;
       }
       .splash-heart {
-        width: 60px;
-        height: 60px;
+        width: 90px;
+        height: 90px;
       }
       .fireworks-fallback {
         width: 150px;
@@ -474,6 +474,7 @@
   <script>
     let tapCount = 0;
     const maxTaps = 5;
+    let usedPositions = [];
 
     const heartsContainer = document.querySelector('.hearts');
     const maxHearts = 20;
@@ -589,24 +590,41 @@
       document.querySelector('.splash-screen').appendChild(lubText);
 
       // Define positions closer to center, avoiding splash text and heart
-      const positions = [
-        { top: '20%', left: '50%', transform: 'translate(-50%, 0)' }, // Top
-        { left: '20%', top: '50%', transform: 'translate(0, -50%)' }, // Left
-        { right: '20%', top: '50%', transform: 'translate(0, -50%)' }, // Right
-        { bottom: '20%', left: '50%', transform: 'translate(-50%, 0)' } // Bottom
+      const isMobile = window.innerWidth <= 600;
+      const positions = isMobile ? [
+        { top: '5%', left: '50%', transform: 'translate(-50%, 0)' }, // Top
+        { left: '5%', top: '50%', transform: 'translate(0, -50%)' }, // Left
+        { right: '5%', top: '50%', transform: 'translate(0, -50%)' }, // Right
+        { bottom: '10%', left: '50%', transform: 'translate(-50%, 0)' } // Bottom
+      ] : [
+        { top: '10%', left: '50%', transform: 'translate(-50%, 0)' }, // Top
+        { left: '10%', top: '50%', transform: 'translate(0, -50%)' }, // Left
+        { right: '10%', top: '50%', transform: 'translate(0, -50%)' }, // Right
+        { bottom: '15%', left: '50%', transform: 'translate(-50%, 0)' } // Bottom
       ];
-      const position = positions[Math.floor(Math.random() * positions.length)];
+
+      // Shuffle positions and ensure unique selection
+      if (usedPositions.length === 0) {
+        usedPositions = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
+      }
+      const positionIndex = usedPositions.shift();
+      const position = positions[positionIndex];
       Object.assign(lubText.style, position);
 
       // Remove text after animation (3s)
       setTimeout(() => lubText.remove(), 3000);
+
+      // Reset usedPositions after 4th tap
+      if (tapCount === 4) {
+        usedPositions = [];
+      }
     }
 
     function handleTap() {
       tapCount++;
       console.log('Tap count:', tapCount);
       const heart = document.querySelector('.splash-heart');
-      const scale = 1 + tapCount * 0.3;
+      const scale = 1 + tapCount * 0.375;
       heart.style.transform = `scale(${scale})`;
 
       if (tapCount <= 4) {
