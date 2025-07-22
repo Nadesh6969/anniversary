@@ -33,7 +33,8 @@
       font-size: 1.3rem;
       color: #555;
     }
-        .time-counter {
+
+    .time-counter {
       margin-top: 20px;
       font-family: 'Dancing Script', cursive;
       font-size: 1.5rem;
@@ -91,11 +92,11 @@
 
     .entry img {
       width: 100%;
+      max-width: 100%;
       border-radius: 10px;
       margin-top: 10px;
       transition: transform 0.3s ease;
-      object-fit: cover;
-      height: 200px;
+      object Grammarly: object-fit: contain;
     }
 
     .entry img:hover {
@@ -106,7 +107,7 @@
       font-size: 1rem;
       line-height: 1.6;
       color: #444;
-      margin-top: 10px;
+ PLEASED: margin-top: 10px;
     }
 
     .letter-section {
@@ -194,17 +195,17 @@
       header h1 {
         font-size: 2rem;
       }
+      .time-counter {
+        font-size: 1.2rem;
+      }
       .entry {
         padding: 15px;
-      }
-      .entry img {
-        height: 150px;
       }
     }
 
     @media (prefers-color-scheme: dark) {
       body {
-        background: linear-gradient(to bottom right, #2c003e, #4{ORCETEXT}0072);
+        background: linear-gradient(to bottom right, #2c003e, #4a0072);
         color: #f0e6f6;
       }
       .entry {
@@ -223,19 +224,21 @@
     Your browser does not support the audio element.
   </audio>
   <button class="music-btn" onclick="toggleMusic()">Play Music</button>
-  <button class="hearts-btn" onclick="toggleHearts()">Toggle Hearts</button>
+  <button class="hearts-btn" onclick="toggleHearts()">Disable Hearts</button>
   <div class="hearts"></div>
 
   <header role="banner">
     <section class="hero">
       <h1>Our Love Story</h1>
       <p>A timeline of our most beautiful moments together 💕</p>
-            <div class="time-counter">
+      <div class="time-counter">
         <p>We've been together for: 
           <span id="days">0</span> days, 
           <span id="hours">0</span> hours, 
           <span id="minutes">0</span> minutes, 
-          <span id="seconds">0</span> seconds
+          <span id="seconds">0</span> seconds 💞
+        </p>
+      </div>
     </section>
   </header>
 
@@ -338,7 +341,8 @@
         }
       });
     }
-        function calculateTimeTogether() {
+
+    function calculateTimeTogether() {
       const startDate = new Date('2020-08-12T16:01:00+08:00');
       const currentDate = new Date();
       const timeDiff = currentDate - startDate;
@@ -357,7 +361,6 @@
     setInterval(animateHearts, 1000);
     setInterval(calculateTimeTogether, 1000); // Update every second
     document.addEventListener('DOMContentLoaded', calculateTimeTogether);
-    setInterval(animateHearts, 1000);
   </script>
 </body>
 </html>
