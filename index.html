@@ -58,6 +58,23 @@
       fill: #d63384;
     }
 
+    .lub-text {
+      position: absolute;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      color: #d63384;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+      z-index: 201;
+      animation: fadeInOut 3s ease forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(10px); }
+      33% { opacity: 1; transform: translateY(0); }
+      66% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-10px); }
+    }
+
     #fireworks-canvas {
       position: absolute;
       top: 0;
@@ -368,8 +385,10 @@
       .letter-content {
         font-size: 1rem;
       }
+      .lub-text {
+        font-size: 1.2rem;
+      }
     }
-
   </style>
 </head>
 <body>
@@ -389,13 +408,13 @@
     <header role="banner">
       <section class="hero">
         <h1>Our Love Story</h1>
-        <p>A timeline of our most beautiful moments together 💞</p>
+        <p>A timeline of our most beautiful moments together 💕</p>
         <div class="time-counter">
           <p>We've been together for: 
             <span id="days">0</span> days, 
             <span id="hours">0</span> hours, 
             <span id="minutes">0</span> minutes, 
-            <span id="seconds">0</span> seconds 
+            <span id="seconds">0</span> seconds 💞
           </p>
         </div>
       </section>
@@ -563,12 +582,36 @@
       setTimeout(() => fallback.remove(), 500);
     }
 
+    function showLubText() {
+      const lubText = document.createElement('div');
+      lubText.classList.add('lub-text');
+      lubText.textContent = 'Is you lub me?';
+      document.querySelector('.splash-screen').appendChild(lubText);
+
+      // Define positions closer to center, avoiding splash text and heart
+      const positions = [
+        { top: '20%', left: '50%', transform: 'translate(-50%, 0)' }, // Top
+        { left: '20%', top: '50%', transform: 'translate(0, -50%)' }, // Left
+        { right: '20%', top: '50%', transform: 'translate(0, -50%)' }, // Right
+        { bottom: '20%', left: '50%', transform: 'translate(-50%, 0)' } // Bottom
+      ];
+      const position = positions[Math.floor(Math.random() * positions.length)];
+      Object.assign(lubText.style, position);
+
+      // Remove text after animation (3s)
+      setTimeout(() => lubText.remove(), 3000);
+    }
+
     function handleTap() {
       tapCount++;
       console.log('Tap count:', tapCount);
       const heart = document.querySelector('.splash-heart');
       const scale = 1 + tapCount * 0.3;
       heart.style.transform = `scale(${scale})`;
+
+      if (tapCount <= 4) {
+        showLubText();
+      }
 
       if (tapCount >= maxTaps) {
         const heartRect = heart.getBoundingClientRect();
@@ -631,7 +674,7 @@
     }
 
     function calculateTimeTogether() {
-      const startDate = new Date('2020-11-29T18:30:00+08:00');
+      const startDate = new Date('2020-08-12T00:00:00+08:00');
       const currentDate = new Date();
       const timeDiff = currentDate - startDate;
       
