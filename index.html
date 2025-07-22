@@ -85,6 +85,11 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
+    @keyframes fadeOut {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+
     .entry h2 {
       color: #d63384;
       margin-top: 0;
@@ -135,7 +140,6 @@
     }
 
     .letter {
-      display: none;
       margin-top: 20px;
       font-size: 1.1rem;
       color: #444;
@@ -143,6 +147,11 @@
       border-radius: 10px;
       padding: 20px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .letter.hidden {
+      animation: fadeOut 0.5s ease forwards;
     }
 
     .music-btn, .hearts-btn {
@@ -300,14 +309,14 @@
     let heartsEnabled = true;
     const music = document.getElementById('bg-music');
     const heartsContainer = document.querySelector('.hearts');
-    const maxHearts = 40; // Increased for more coverage
+    const maxHearts = 20;
     const hearts = Array(maxHearts).fill().map(() => {
       const heart = document.createElement('div');
       heart.classList.add('heart');
       heart.textContent = 'Nadesh ❤️ Simran';
       heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (6 + Math.random() * 4) + 's'; // 6-10s for variety
-      heart.style.animationDelay = Math.random() * 2 + 's'; // Stagger start times
+      heart.style.animationDuration = (6 + Math.random() * 4) + 's';
+      heart.style.animationDelay = Math.random() * 2 + 's';
       heartsContainer.appendChild(heart);
       return heart;
     });
@@ -329,11 +338,18 @@
       const letter = document.getElementById('letter');
       const btn = document.querySelector('.letter-btn');
       const isOpen = letter.style.display === 'block';
-      letter.style.display = isOpen ? 'none' : 'block';
-      btn.setAttribute('aria-expanded', !isOpen);
-      if (!isOpen) {
+      
+      if (isOpen) {
+        letter.classList.add('hidden');
+        setTimeout(() => {
+          letter.style.display = 'none';
+          letter.classList.remove('hidden');
+        }, 500); // Match animation duration
+      } else {
+        letter.style.display = 'block';
         letter.scrollIntoView({ behavior: 'smooth' });
       }
+      btn.setAttribute('aria-expanded', !isOpen);
     }
 
     function toggleHearts() {
@@ -370,7 +386,7 @@
     }
 
     setInterval(animateHearts, 1000);
-    setInterval(calculateTimeTogether, 1000); // Update every second
+    setInterval(calculateTimeTogether, 1000);
     document.addEventListener('DOMContentLoaded', calculateTimeTogether);
   </script>
 </body>
