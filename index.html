@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Love Story</title>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins:wght@300;400;600&display=swap" as="style" onload="this.rel='stylesheet'">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -24,13 +24,13 @@
 
     header h1 {
       font-family: 'Dancing Script', cursive;
-      font-size: 3.5em;
+      font-size: 3.5rem;
       margin: 0 0 10px;
       color: #d63384;
     }
 
     header p {
-      font-size: 1.3em;
+      font-size: 1.3rem;
       color: #555;
     }
 
@@ -67,14 +67,8 @@
     }
 
     @keyframes popIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
     }
 
     .entry h2 {
@@ -87,6 +81,8 @@
       border-radius: 10px;
       margin-top: 10px;
       transition: transform 0.3s ease;
+      object-fit: cover;
+      height: 200px;
     }
 
     .entry img:hover {
@@ -94,7 +90,7 @@
     }
 
     .entry p {
-      font-size: 1em;
+      font-size: 1rem;
       line-height: 1.6;
       color: #444;
       margin-top: 10px;
@@ -114,7 +110,7 @@
       border: none;
       padding: 12px 25px;
       border-radius: 25px;
-      font-size: 1em;
+      font-size: 1rem;
       cursor: pointer;
       transition: background 0.3s ease, transform 0.2s ease;
     }
@@ -127,7 +123,7 @@
     .letter {
       display: none;
       margin-top: 20px;
-      font-size: 1.1em;
+      font-size: 1.1rem;
       color: #444;
       background: #fffafc;
       border-radius: 10px;
@@ -135,7 +131,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
-    .music-btn {
+    .music-btn, .hearts-btn {
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -150,7 +146,11 @@
       transition: transform 0.2s ease;
     }
 
-    .music-btn:hover {
+    .hearts-btn {
+      bottom: 60px;
+    }
+
+    .music-btn:hover, .hearts-btn:hover {
       transform: scale(1.1);
     }
 
@@ -174,68 +174,87 @@
 
     @keyframes float {
       0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(100vh); opacity: 0; }
+      100% { transform: translateY(-100vh); opacity: 0; }
     }
 
     @media (max-width: 600px) {
       header h1 {
-        font-size: 2.5em;
+        font-size: 2rem;
       }
       .entry {
         padding: 15px;
+      }
+      .entry img {
+        height: 150px;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: linear-gradient(to bottom right, #2c003e, #4{ORCETEXT}0072);
+        color: #f0e6f6;
+      }
+      .entry {
+        background: #3c1361;
+        box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
+      }
+      .letter {
+        background: #4a235a;
       }
     }
   </style>
 </head>
 <body>
-  <audio id="bg-music" loop>
+  <audio id="bg-music" loop preload="metadata">
     <source src="your-music.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
-
   <button class="music-btn" onclick="toggleMusic()">Play Music</button>
+  <button class="hearts-btn" onclick="toggleHearts()">Toggle Hearts</button>
   <div class="hearts"></div>
 
-  <header>
-    <h1>Our Love Story</h1>
-    <p>A timeline of our most beautiful moments together 💕</p>
+  <header role="banner">
+    <section class="hero">
+      <h1>Our Love Story</h1>
+      <p>A timeline of our most beautiful moments together 💕</p>
+    </section>
   </header>
 
-  <main class="timeline">
-    <div class="entry">
+  <section class="timeline" role="main">
+    <div class="entry" id="year-2020">
       <h2>2020 – The Beginning 💘</h2>
       <p>The year we met and everything changed. From strangers to soulmates, our journey began.</p>
-      <img src="images/2020.jpg" alt="2020 memory" class="memory-photo" />
+      <img src="images/2020.jpg" alt="Photo from our first meeting in 2020" class="memory-photo" loading="lazy">
     </div>
-    <div class="entry">
+    <div class="entry" id="year-2021">
       <h2>2021 – Adventures Together ✈️</h2>
       <p>Our first trips, inside jokes, and hundreds of photos that captured laughter and love.</p>
-      <img src="images/2021.jpg" alt="2021 memory" class="memory-photo" />
+      <img src="images/2021.jpg" alt="Photo from our first trip together in 2021" class="memory-photo" loading="lazy">
     </div>
-    <div class="entry">
+    <div class="entry" id="year-2022">
       <h2>2022 – Growing Stronger 🌱</h2>
       <p>Through challenges and distance, we grew stronger, hand in hand, heart to heart.</p>
-      <img src="images/2022.jpg" alt="2022 memory" class="memory-photo" />
+      <img src="images/2022.jpg" alt="Photo from a special moment in 2022" class="memory-photo" loading="lazy">
     </div>
-    <div class="entry">
+    <div class="entry" id="year-2023">
       <h2>2023 – Milestones 🎉</h2>
       <p>Celebrating our wins, birthdays, and another year filled with memories and kisses.</p>
-      <img src="images/2023.jpg" alt="2023 memory" class="memory-photo" />
+      <img src="images/2023.jpg" alt="Photo from our 2023 anniversary celebration" class="memory-photo" loading="lazy">
     </div>
-    <div class="entry">
+    <div class="entry" id="year-2024">
       <h2>2024 – Dreams and Promises 💍</h2>
       <p>Making plans, promising forever, and dreaming of a beautiful future together.</p>
-      <img src="images/2024.jpg" alt="2024 memory" class="memory-photo" />
+      <img src="images/2024.jpg" alt="Photo from a romantic moment in 2024" class="memory-photo" loading="lazy">
     </div>
-    <div class="entry">
+    <div class="entry" id="year-2025">
       <h2>2025 – Right Now 💖</h2>
       <p>This very moment. This very love. We are here, and I’m so thankful for you.</p>
-      <img src="images/2025.jpg" alt="2025 memory" class="memory-photo" />
+      <img src="images/2025.jpg" alt="Photo capturing our love in 2025" class="memory-photo" loading="lazy">
     </div>
-  </main>
+  </section>
 
-  <section class="letter-section">
-    <button class="letter-btn" onclick="toggleLetter()">Read My Letter to You 💌</button>
+  <section class="letter-section" role="complementary">
+    <button class="letter-btn" onclick="toggleLetter()" aria-expanded="false" aria-controls="letter">Read My Letter to You 💌</button>
     <div id="letter" class="letter">
       Dear Simran,<br><br>
       From the first moment we met, I knew something special had begun. Every memory we’ve shared, every laugh and tear, has made me love you more deeply than I ever thought possible.<br><br>
@@ -246,34 +265,61 @@
   </section>
 
   <script>
-    const music = document.getElementById('bg-music');
     let isPlaying = false;
-
-    function toggleMusic() {
-      if (isPlaying) {
-        music.pause();
-        document.querySelector('.music-btn').textContent = 'Play Music';
-      } else {
-        music.play();
-        document.querySelector('.music-btn').textContent = 'Pause Music';
-      }
-      isPlaying = !isPlaying;
-    }
-
-    function toggleLetter() {
-      const letter = document.getElementById('letter');
-      letter.style.display = letter.style.display === 'block' ? 'none' : 'block';
-    }
-
+    let heartsEnabled = true;
+    const music = document.getElementById('bg-music');
     const heartsContainer = document.querySelector('.hearts');
-    setInterval(() => {
+    const maxHearts = 10;
+    const hearts = Array(maxHearts).fill().map(() => {
       const heart = document.createElement('div');
       heart.classList.add('heart');
       heart.style.left = Math.random() * 100 + 'vw';
       heart.style.animationDuration = (4 + Math.random() * 3) + 's';
       heartsContainer.appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
-    }, 500);
+      return heart;
+    });
+
+    function toggleMusic() {
+      if (isPlaying) {
+        music.pause();
+      } else {
+        music.play().catch(e => {
+          console.error('Audio playback failed:', e);
+          alert('Unable to play music. Please check the file or browser settings.');
+        });
+      }
+      document.querySelector('.music-btn').textContent = isPlaying ? 'Play Music' : 'Pause Music';
+      isPlaying = !isPlaying;
+    }
+
+    function toggleLetter() {
+      const letter = document.getElementById('letter');
+      const btn = document.querySelector('.letter-btn');
+      const isOpen = letter.style.display === 'block';
+      letter.style.display = isOpen ? 'none' : 'block';
+      btn.setAttribute('aria-expanded', !isOpen);
+      if (!isOpen) {
+        letter.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function toggleHearts() {
+      heartsEnabled = !heartsEnabled;
+      heartsContainer.style.display = heartsEnabled ? 'block' : 'none';
+      document.querySelector('.hearts-btn').textContent = heartsEnabled ? 'Disable Hearts' : 'Enable Hearts';
+    }
+
+    function animateHearts() {
+      if (!heartsEnabled) return;
+      hearts.forEach(heart => {
+        if (parseFloat(heart.style.opacity) === 0 || !heart.style.opacity) {
+          heart.style.left = Math.random() * 100 + 'vw';
+          heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+          heart.style.opacity = 1;
+        }
+      });
+    }
+    setInterval(animateHearts, 1000);
   </script>
 </body>
 </html>
