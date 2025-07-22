@@ -129,6 +129,22 @@
       font-size: 3.5rem;
       margin: 0 0 10px;
       color: #d63384;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .header-heart {
+      font-size: 2rem;
+      color: #d63384;
+      margin-left: 10px;
+      animation: pulse 1.5s infinite ease-in-out;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
 
     header p {
@@ -142,10 +158,18 @@
       font-size: 1.5rem;
       color: #d63384;
       animation: popIn 1.5s ease forwards;
+      text-shadow: 0 0 5px #d63384;
+      animation: glow 2s infinite ease-in-out;
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 0 0 5px #d63384; }
+      50% { text-shadow: 0 0 10px #ffccd5; }
+      100% { text-shadow: 0 0 5px #d63384; }
     }
 
     .time-counter span {
-      font-weight: 600;
+      font-weight: 700;
       color: #c2185b;
       margin: 0 5px;
     }
@@ -166,6 +190,26 @@
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 1s forwards ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .entry:hover, .entry.active {
+      transform: translateY(-5px);
+      box-shadow: 0 0 10px rgba(214, 51, 132, 0.5);
+    }
+
+    .entry-heart {
+      position: absolute;
+      font-size: 1rem;
+      color: #d63384;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+      animation: popHeart 1s ease forwards;
+      z-index: 202;
+    }
+
+    @keyframes popHeart {
+      0% { opacity: 0.8; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-30px); }
     }
 
     .entry:nth-child(1) { animation-delay: 0.2s; }
@@ -214,17 +258,30 @@
       margin-top: 10px;
       transition: transform 0.3s ease;
       object-fit: contain;
+      position: relative;
+    }
+
+    .entry img::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border: 5px solid #f48fb1;
+      border-radius: 15px;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 5px,
+        #f48fb1 5px,
+        #f48fb1 10px
+      );
+      z-index: -1;
     }
 
     .entry img:hover {
       transform: scale(1.05);
-    }
-
-    .entry p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #444;
-      margin-top: 10px;
     }
 
     .letter-section {
@@ -232,6 +289,7 @@
       margin: 50px auto;
       padding: 30px;
       max-width: 800px;
+      position: relative;
     }
 
     .letter-btn {
@@ -243,11 +301,26 @@
       font-size: 1rem;
       cursor: pointer;
       transition: background 0.3s ease, transform 0.2s ease;
+      position: relative;
+      z-index: 1;
     }
 
     .letter-btn:hover {
       background: #c2185b;
       transform: scale(1.05);
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 0.8rem;
+      color: #ffccd5;
+      z-index: 2;
+      animation: floatSparkle 1s ease forwards;
+    }
+
+    @keyframes floatSparkle {
+      0% { opacity: 0.8; transform: translate(0, 0); }
+      100% { opacity: 0; transform: translate(0, -20px); }
     }
 
     .letter-container {
@@ -342,7 +415,7 @@
       color: #d63384;
       font-family: 'Dancing Script', cursive;
       text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-      animation: float 8s infinite ease-in;
+      animation: float 8s infinite ease-in, wobble 2s infinite ease-in-out;
       white-space: nowrap;
     }
 
@@ -351,9 +424,18 @@
       100% { top: -10vh; opacity: 0; }
     }
 
+    @keyframes wobble {
+      0% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+      100% { transform: rotate(-5deg); }
+    }
+
     @media (max-width: 600px) {
       header h1 {
         font-size: 2rem;
+      }
+      .header-heart {
+        font-size: 1.5rem;
       }
       .time-counter {
         font-size: 1.2rem;
@@ -388,6 +470,16 @@
       .lub-text {
         font-size: 1.2rem;
       }
+      .entry img::before {
+        top: -8px;
+        left: -8px;
+        right: -8px;
+        bottom: -8px;
+        border: 3px solid #f48fb1;
+      }
+      .sparkle {
+        font-size: 0.6rem;
+      }
     }
   </style>
 </head>
@@ -407,14 +499,14 @@
 
     <header role="banner">
       <section class="hero">
-        <h1>Our Love Story</h1>
-        <p>A timeline of our most beautiful moments together 💕</p>
+        <h1>Our Love Story <span class="header-heart">💞</span></h1>
+        <p>A timeline of our most beautiful moments together </p>
         <div class="time-counter">
           <p>We've been together for: 
             <span id="days">0</span> days, 
             <span id="hours">0</span> hours, 
             <span id="minutes">0</span> minutes, 
-            <span id="seconds">0</span> seconds 💞
+            <span id="seconds">0</span> seconds 
           </p>
         </div>
       </section>
@@ -477,13 +569,14 @@
     let usedPositions = [];
 
     const heartsContainer = document.querySelector('.hearts');
-    const maxHearts = 20;
+    const maxHearts = 30;
     const hearts = Array(maxHearts).fill().map(() => {
       const heart = document.createElement('div');
       heart.classList.add('heart');
       heart.textContent = 'Nadesh ❤️ Simran';
       heart.style.left = Math.random() * 100 + 'vw';
       heart.style.top = '100vh';
+      heart.style.fontSize = (0.6 + Math.random() * 0.4) + 'rem';
       heart.style.animationDuration = (6 + Math.random() * 4) + 's';
       heart.style.animationDelay = Math.random() * 8 + 's';
       heartsContainer.appendChild(heart);
@@ -586,24 +679,22 @@
     function showLubText() {
       const lubText = document.createElement('div');
       lubText.classList.add('lub-text');
-      lubText.textContent = 'Is you lub me?';
+      lubText.textContent = 'You lub me?';
       document.querySelector('.splash-screen').appendChild(lubText);
 
-      // Define positions closer to center, avoiding splash text and heart
       const isMobile = window.innerWidth <= 600;
       const positions = isMobile ? [
-        { top: '5%', left: '50%', transform: 'translate(-50%, 0)' }, // Top
-        { left: '5%', top: '50%', transform: 'translate(0, -50%)' }, // Left
-        { right: '5%', top: '50%', transform: 'translate(0, -50%)' }, // Right
-        { bottom: '10%', left: '50%', transform: 'translate(-50%, 0)' } // Bottom
+        { top: '5%', left: '50%', transform: 'translate(-50%, 0)' },
+        { left: '5%', top: '50%', transform: 'translate(0, -50%)' },
+        { right: '5%', top: '50%', transform: 'translate(0, -50%)' },
+        { bottom: '10%', left: '50%', transform: 'translate(-50%, 0)' }
       ] : [
-        { top: '10%', left: '50%', transform: 'translate(-50%, 0)' }, // Top
-        { left: '10%', top: '50%', transform: 'translate(0, -50%)' }, // Left
-        { right: '10%', top: '50%', transform: 'translate(0, -50%)' }, // Right
-        { bottom: '15%', left: '50%', transform: 'translate(-50%, 0)' } // Bottom
+        { top: '10%', left: '50%', transform: 'translate(-50%, 0)' },
+        { left: '10%', top: '50%', transform: 'translate(0, -50%)' },
+        { right: '10%', top: '50%', transform: 'translate(0, -50%)' },
+        { bottom: '15%', left: '50%', transform: 'translate(-50%, 0)' }
       ];
 
-      // Shuffle positions and ensure unique selection
       if (usedPositions.length === 0) {
         usedPositions = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
       }
@@ -611,10 +702,8 @@
       const position = positions[positionIndex];
       Object.assign(lubText.style, position);
 
-      // Remove text after animation (3s)
       setTimeout(() => lubText.remove(), 3000);
 
-      // Reset usedPositions after 4th tap
       if (tapCount === 4) {
         usedPositions = [];
       }
@@ -654,6 +743,17 @@
       }
     }
 
+    function createEntryHeart(entry) {
+      const rect = entry.getBoundingClientRect();
+      const heart = document.createElement('div');
+      heart.classList.add('entry-heart');
+      heart.textContent = '❤️';
+      heart.style.left = `${rect.left + rect.width / 2}px`;
+      heart.style.top = `${rect.top - 20}px`;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 1000);
+    }
+
     function toggleLetter() {
       const letterContainer = document.getElementById('letter-container');
       const letterBackdrop = document.getElementById('letter-backdrop');
@@ -679,11 +779,27 @@
       btn.setAttribute('aria-expanded', !isOpen);
     }
 
+    function createSparkles() {
+      const btn = document.querySelector('.letter-btn');
+      const rect = btn.getBoundingClientRect();
+      const sparkleCount = 5;
+      for (let i = 0; i < sparkleCount; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        sparkle.textContent = '★';
+        sparkle.style.left = `${rect.left + Math.random() * rect.width}px`;
+        sparkle.style.top = `${rect.top + (Math.random() - 0.5) * rect.height}px`;
+        document.querySelector('.letter-section').appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+      }
+    }
+
     function animateHearts() {
       hearts.forEach(heart => {
         if (parseFloat(heart.style.opacity) === 0 || !heart.style.opacity) {
           heart.style.left = Math.random() * 100 + 'vw';
           heart.style.top = '100vh';
+          heart.style.fontSize = (0.6 + Math.random() * 0.4) + 'rem';
           heart.style.animationDuration = (6 + Math.random() * 4) + 's';
           heart.style.animationDelay = Math.random() * 8 + 's';
           heart.style.opacity = 0.7;
@@ -692,7 +808,7 @@
     }
 
     function calculateTimeTogether() {
-      const startDate = new Date('2020-08-12T00:00:00+08:00');
+      const startDate = new Date('2020-11-29T18:30:00+08:00');
       const currentDate = new Date();
       const timeDiff = currentDate - startDate;
       
@@ -712,6 +828,20 @@
       document.getElementById('letter-backdrop').style.display = 'none';
       calculateTimeTogether();
       console.log('Page loaded, canvas initialized');
+
+      // Add touchstart for mobile timeline entries
+      document.querySelectorAll('.entry').forEach(entry => {
+        entry.addEventListener('touchstart', () => {
+          entry.classList.add('active');
+          createEntryHeart(entry);
+          setTimeout(() => entry.classList.remove('active'), 1000);
+        });
+      });
+
+      // Add sparkle effect to letter button
+      const letterBtn = document.querySelector('.letter-btn');
+      letterBtn.addEventListener('mouseover', createSparkles);
+      letterBtn.addEventListener('touchstart', createSparkles);
     });
     setInterval(animateHearts, 1000);
     setInterval(calculateTimeTogether, 1000);
