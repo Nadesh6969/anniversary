@@ -33,6 +33,19 @@
       font-size: 1.3rem;
       color: #555;
     }
+        .time-counter {
+      margin-top: 20px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      color: #d63384;
+      animation: popIn 1.5s ease forwards;
+    }
+
+    .time-counter span {
+      font-weight: 600;
+      color: #c2185b;
+      margin: 0 5px;
+    }
 
     .timeline {
       max-width: 800px;
@@ -217,6 +230,12 @@
     <section class="hero">
       <h1>Our Love Story</h1>
       <p>A timeline of our most beautiful moments together 💕</p>
+            <div class="time-counter">
+        <p>We've been together for: 
+          <span id="days">0</span> days, 
+          <span id="hours">0</span> hours, 
+          <span id="minutes">0</span> minutes, 
+          <span id="seconds">0</span> seconds 💞
     </section>
   </header>
 
